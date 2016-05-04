@@ -1,4 +1,4 @@
-brake.o: src/brake.cpp src/brake.h \
+evaluation.o: src/evaluation.cpp src/evaluation.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/Arduino.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/pgmspace.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/interrupt.h \

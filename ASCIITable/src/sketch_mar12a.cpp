@@ -1,19 +1,30 @@
-/* Version: 30-04-16
+/* Version: 04-05-16
    
    There are still some Error-Messages because of unexpected measurement-values,
    if switch is in the "unsynchronized" position.
 */
 
-#include "Arduino.h"
 #include "Servo.h"
 #include "brake.h"
-#include "brakeConstants.h"
-#include "boardConstants.h"
+#include "servoControl.h"
+#include "constants.h"
+#include "evaluation.h"
+
+/********************************************************* 
+**********************************************************
+**    Variable declarations initialization / resets     **
+**********************************************************
+*********************************************************/
 
 Servo brakeSimulator;
 byte brakeStatus;
-byte simulatorDirection = TURN_RIGHT;
-int brakeSimulatorPos = 0;
+
+/********************************************************* 
+**********************************************************
+**                 Method declarations                  **
+**********************************************************
+*********************************************************/
+
 
 // Read Values at ADCs and converts into Volt.
 float readVccSense(){
@@ -29,65 +40,6 @@ float readSwitchSense2(){
   return analogRead(SWITCH_2_ADC) * (SUPPLY_VOLTAGE / ADC_MAX_VALUE);
 }
 
-/* Checks, if supply-voltage is ok.
-   true - if there are no HW-failures in circuit.
-*/
-boolean evaluateVccSense(float measuredVcc){
-  boolean vccOk;
-  if(measuredVcc >= VCC_GOOD){ vccOk = true;}
-  else{vccOk = false;}
-  return vccOk;
-}
-// to avoid, that function is optimized during compiling
-boolean evaluateVccSense(float measuredVcc) __attribute__ ((noinline));
-
-boolean testfunc(){
-  return false;
-}
-
-/* Checks, if gnd-voltage is ok.
-   true - if there are no HW-failures in circuit.
-*/
-boolean evaluateGndSense(float gndVoltage){
-  boolean gndOk;
-  if(gndVoltage <= GND_GOOD){ gndOk = true;}
-  else{gndOk = false;}
-  return gndOk;
-}
-// to avoid, that function is optimized during compiling
-boolean evaluateGndSense(float gndVoltage) __attribute__ ((noinline));
-
-/*
-  only the return-status 1, 7 and 13 (and maybe 2) are relevant for the detection and identification of hardware-failures
-  the other statuses are good to know if you want to double-check a certain hw-failure-detection, but they
-  are not used in this version of the algorithm (maybe i can use the on the second board in an other algorithm)
-  
-  return-status 2, 5 and 11 are rekevant for the evaluation of the pressed-status of the switch-button.
-
-  Note/TODO: Maybe it is better / nicer to use a map in this function, to map a voltage to an interval, that can be mapped to a status!
-*/
-voltInterval evaluateSwitch(float voltage){
-  voltInterval returnStatus; //check, if NULL is ok as default - what happens if NULL is returned?
-  if((voltage >= 0.00) && (voltage <= 0.03)){returnStatus = FAIL_GND_SHORT;}
-  else if((voltage >= 0.29) && (voltage <= 0.42)){returnStatus = SWITCH_LOW_VAL;}
-  else if((voltage >= 0.69) && (voltage <= 0.73)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 0.81) && (voltage <= 0.86)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 1.03) && (voltage <= 1.18)){returnStatus = SWITCH_NORM_VAL;}
-  else if((voltage >= 1.58) && (voltage <= 1.68)){returnStatus = FAIL_OPEN;}
-  else if((voltage >= 1.86) && (voltage <= 1.91)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 2.23) && (voltage <= 2.28)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 2.43) && (voltage <= 2.48)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 2.49) && (voltage <= 2.61)){returnStatus = SWITCH_HIGH_VAL;}
-  else if((voltage >= 2.80) && (voltage <= 2.84)){returnStatus = FAIL_IGNORE;}
-  else if((voltage >= 2.98) && (voltage <= 3.30)){returnStatus = FAIL_VCC_SHORT;}
-  else {
-    Serial.print("evaluateError!");
-    Serial.print("   ");
-    Serial.println(voltage);    
-  }
-  return returnStatus;
-}
-
 // Supporting function for printing simple error-messages.
 void reportError(String errorType){
   Serial.println(errorType);
@@ -99,17 +51,23 @@ void reportSwitchPress(String pressedType){
   Serial.println(pressedType);
 }
 
+/********************************************************* 
+**********************************************************
+**                      setup()                         **
+**********************************************************
+*********************************************************/
+
 void setup() {
-  //Attach Servo to PIN 9~
-  brakeSimulator.attach(SERVO_PIN);
-  // Initializing led-pins as an output.
-  pinMode(LED, OUTPUT);
-  pinMode(ERROR_LED, OUTPUT);
-  pinMode(INFO_LED, OUTPUT);
-  // Sets the size (in bits) of the value returned by analogRead().
-  analogReadResolution(ADC_READ_RESOLUTION);
-  // Sets the data rate for communication with the computer - 115200 is one of the default rates.
-  Serial.begin(115200);
+  brakeSimulator.attach(SERVO_PIN);           //Attach Servo to PIN 9~
+  
+  pinMode(LED, OUTPUT);                       // Initializing led-pin as an output.
+  pinMode(ERROR_LED, OUTPUT);                 // Initializing led-pin as an output.
+  pinMode(INFO_LED, OUTPUT);                  // Initializing led-pin as an output.
+  
+  analogReadResolution(ADC_READ_RESOLUTION);  // Sets the size (in bits) of the value returned by analogRead(). 
+  
+  Serial.begin(115200);                       // Sets the data rate for communication with the computer - 115200 is one of the default rates.       
+  
   // Checks if brake-initialization was successful
   if (brakeInit() != true) {
     Serial.println("Can't initialise brake - stopping.");
@@ -121,32 +79,32 @@ void setup() {
   }
 }
 
+/********************************************************* 
+**********************************************************
+**                       loop()                         **
+**********************************************************
+*********************************************************/
+
 void loop() {
   
-  /*********************************************** 
-    Variable declarations initialization / resets
-  ***********************************************/
+  /********************************************************* 
+  **    Variable declarations initialization / resets     **
+  *********************************************************/
+ 
+  float vccSense = 0;             // vccSense - measured VCC-control voltage 
+  float gndSense = 0;             // gndSense - measured GND-control voltage
+  float switch1 = 0;              // switch1 - measured voltage of first switch-part
+  float switch2 = 0;              // switch2 - measured voltage of second switch-part
+  boolean vccStatusOk = 0;        // vccStatusOk - true, if there is no short or opening in the signal circuit
+  boolean gndStatusOk = 0;        // gndStatusOk - true, if there is no short or opening in the signal circuit
+  voltInterval switchStatus1;     // Indicates, in which range the first measured switch-value was.
+  voltInterval switchStatus2;     // Indicates in which range the second measured switch-value was.
+  int servoPos = 0;               // position of servo - [0,180]
+  systemState sysState;
   
-  // vccSense - measured VCC-control voltage 
-  float vccSense = 0;
-  // gndSense - measured GND-control voltage
-  float gndSense = 0;
-  // switch1 - measured voltage of first switch-part
-  float switch1 = 0;
-  // switch2 - measured voltage of second switch-part
-  float switch2 = 0;
-  // vccStatusOk - true, if there is no short or opening in the signal circuit
-  boolean vccStatusOk = 0;
-  // gndStatusOk - true, if there is no short or opening in the signal circuit
-  boolean gndStatusOk = 0;
-  // Indicates, in which range the first measured switch-value was.
-  voltInterval switchStatus1;
-  // Indicates in which range the second measured switch-value was.
-  voltInterval switchStatus2;
-  
-  /**************************
-    Methods / "Working-Part"
-  **************************/
+  /********************************************************* 
+  **              Methods / "Working Part"                **
+  *********************************************************/
   
   // Switch led on and off, to signalize that the programme is running.
   digitalWrite(LED, HIGH);
@@ -154,82 +112,58 @@ void loop() {
   digitalWrite(LED, LOW);
   delay(50);
   
-  // Read ADC-Input.
   vccSense = readVccSense();
   gndSense = readGndSense();
   switch1 = readSwitchSense1();
   switch2 = readSwitchSense2();
   
-  // Check, if "basic" (no switch) circuit is ok.   
   vccStatusOk = evaluateVccSense(vccSense);
   gndStatusOk = evaluateGndSense(gndSense);
-  
-  /* Two of the following values: 
-     FAIL_GND_SHORT, FAIL_VCC_SHORT, FAIL_OPEN, SWITCH_NORM_VAL, SWITCH_LOW_VAL, SWITCH_HIGH_VAL, FAIL_IGNORE
-     Indicate position of switch and possible HW-Failures. 
-  */ 
   switchStatus1 = evaluateSwitch(switch1);
   switchStatus2 = evaluateSwitch(switch2);
 
   if(!vccStatusOk){reportError("Error: VCC");}
   if(!gndStatusOk){reportError("Error: GND");}
   
-  // Reasons Brake-/Switch/Circuit-State based on measured ADC-values and defined voltage intervals.
   if(vccStatusOk && gndStatusOk){
-    if((switchStatus1 == SWITCH_NORM_VAL) && (switchStatus2 == SWITCH_NORM_VAL)){/*nothing pressed*/}
-    else if((switchStatus1 == SWITCH_LOW_VAL) && (switchStatus2 == SWITCH_HIGH_VAL)){
-      reportSwitchPress("Apply pressed.");
+    // Reasons Brake-/Switch/Circuit-State based on measured ADC-values and defined voltage intervals.
+    sysState = analyseSystemState(switchStatus1, switchStatus2, switch1, switch2);
+  }
+  
+  //applySystemState(sysState)      //TODO : find better name for function!
+  //!!!Achtung gndOK und vccOK noch mit berücksichtigen
+  switch (sysState){
+    case APPLY_PRESSED:
       applyBrake();
-    }
-    else if((switchStatus1 == SWITCH_HIGH_VAL) && (switchStatus2 == SWITCH_LOW_VAL)){
-      reportSwitchPress("Release pressed.");
+      break;
+    case RELEASE_PRESSED:
       releaseBrake();
-    }
-    //HW-Failures
-    else if(switchStatus1 == FAIL_VCC_SHORT){reportError("Short VCC -> C.");}
-    else if(switchStatus2 == FAIL_VCC_SHORT){reportError("Short VCC -> E.");}
-    else if(switchStatus1 == FAIL_GND_SHORT){reportError("Short GND -> D.");}
-    else if(switchStatus2 == FAIL_GND_SHORT){reportError("Short GND -> F.");}
-    else if(switchStatus1 == FAIL_OPEN){reportError("Open res @ G.");}
-    else if(switchStatus2 == FAIL_OPEN){reportError("Open res @ H.");}
-    else if( ((switchStatus1 == SWITCH_LOW_VAL) && (switchStatus2 == SWITCH_NORM_VAL)) ||
-             ((switchStatus1 == SWITCH_NORM_VAL) && (switchStatus2 == SWITCH_LOW_VAL)) ){
-      Serial.println("Detected unsynchronized-behaviour of the Switch Button --> Ignored!");
-    }
-    // Unknown combination of voltage-intervals - or lack of voltage interval(s)
-    else{
-        Serial.println("Unknown Error");
-        Serial.print("   ");
-        Serial.print(switch1);
-        Serial.print("   ");
-        Serial.println(switch2);
-      }
-    }
+      break;
+    case SHORT_VCC_C:
+      reportError("Short VCC -> C.");
+      break;
+    case SHORT_VCC_E:
+      reportError("Short VCC -> E.");
+      break;
+    case SHORT_GND_D:
+      reportError("Short GND -> D.");
+      break;
+    case SHORT_GND_F:
+      reportError("Short GND -> F.");
+      break;
+    case OPEN_RES_G:
+      reportError("Open res @ G.");
+      break;
+    case OPEN_RES_H:
+      reportError("Open res @ H.");
+      break;      
+  }
         
   brakeStatus = getBrakeStatus();
-  if(brakeSimulatorPos == 180){
-    simulatorDirection = TURN_LEFT;
-  }
-  if(brakeSimulatorPos == 0){
-    simulatorDirection = TURN_RIGHT;
-  }
-  if(brakeStatus == BRAKE_RELEASED){
-    if(simulatorDirection == TURN_RIGHT){
-      brakeSimulatorPos += 1;
-    }
-    else if(simulatorDirection == TURN_LEFT){
-      brakeSimulatorPos -= 1;
-    }
-  }
-  else if(brakeStatus == BRAKE_APPLIED){
-    brakeSimulatorPos = 0;
-  }
-  else{
-    Serial.print("Error: BrakeState-Evaluation!");
-  }
-  brakeSimulator.write(brakeSimulatorPos);
-  Serial.print("Servo-Pos: ");
-  Serial.println(brakeSimulatorPos);
   
+  servoPos = getServoPos(brakeStatus);
   
+  if((servoPos >= 0) && (servoPos <= 180)){    // check value, before passing it to a library function! MISRA-Dir. 4.11
+    brakeSimulator.write(servoPos);
+  } 
  }

@@ -1,4 +1,7 @@
 sketch_mar12a.o: src/sketch_mar12a.cpp \
+ C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/Servo.h \
+ C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/sam/ServoTimers.h \
+ src/brake.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/Arduino.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/pgmspace.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/interrupt.h \
@@ -132,6 +135,4 @@ sketch_mar12a.o: src/sketch_mar12a.cpp \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBCore.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBAPI.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/RingBuffer.h \
- C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/Servo.h \
- C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/sam/ServoTimers.h \
- src/brake.h src/brakeConstants.h src/boardConstants.h
+ src/servoControl.h src/constants.h src/evaluation.h

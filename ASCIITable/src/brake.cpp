@@ -3,21 +3,14 @@
 *  Version: 30-04-16
 */
 #include "brake.h"
-#include "Arduino.h"
-#include "brakeConstants.h"
-#include "boardConstants.h"
-#include "Servo.h"
+#include "constants.h"
 
 static byte brakeState = 0;
 
-/* brakeStatus - BRAKE_APPLIED 10, BRAKE_RELEASED 11
-*/
 byte getBrakeStatus() {
   return brakeState;
 }
 
-/* Applies the brake.
-*/  
 void applyBrake() {
   if(brakeState != BRAKE_APPLIED){
     brakeState = BRAKE_APPLIED;
@@ -27,8 +20,6 @@ void applyBrake() {
   }
 }
 
-/* Releases the brake.
-*/
 void releaseBrake() {
   if(brakeState != BRAKE_RELEASED){
     brakeState = BRAKE_RELEASED;
@@ -37,8 +28,7 @@ void releaseBrake() {
     digitalWrite(INFO_LED, LOW);
   }
 }
-/* Initialises the brake.
-*/
+
 boolean brakeInit() {
   /* Set up servo to "Brake-Applied" position */
   Serial.println("Brake-Initialization");

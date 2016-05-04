@@ -16,36 +16,43 @@
        <Combo>
         <ID.0>
          <Data.0>
-          <__>evaluateVccSense</__>
+          <__>brakeStatus</__>
          </Data.0>
          <Data.1>
-          <__>evaluateSw</__>
+          <__>digitalWrite</__>
          </Data.1>
          <Data.2>
-          <__>evalua</__>
+          <__>brakeSta</__>
          </Data.2>
          <Data.3>
-          <__>Apply</__>
+          <__>evaluateVccSense</__>
          </Data.3>
          <Data.4>
-          <__>apply</__>
+          <__>evaluateSw</__>
          </Data.4>
          <Data.5>
-          <__>serialEvent</__>
+          <__>evalua</__>
          </Data.5>
+         <Data.6>
+          <__>Apply</__>
+         </Data.6>
+         <Data.7>
+          <__>apply</__>
+         </Data.7>
         </ID.0>
        </Combo>
       </History>
       <PI.0>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <P>src\boardConstants.h</P>
-       <VL>21</VL>
+       <L>235</L>
+       <P>src\sketch_mar12a.cpp</P>
+       <VL>199</VL>
       </PI.0>
       <PI.1>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <L>27</L>
-       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\hooks.c</P>
-       <VL>18</VL>
+       <C>71</C>
+       <L>6</L>
+       <P>src\brakeConstants.h</P>
       </PI.1>
       <PI.10>
        <Bookmarks_num_>0</Bookmarks_num_>
@@ -110,9 +117,9 @@
       </PI.19>
       <PI.2>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <L>42</L>
-       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring_analog.c</P>
-       <VL>36</VL>
+       <C>51</C>
+       <L>15</L>
+       <P>src\brake.h</P>
       </PI.2>
       <PI.20>
        <Bookmarks_num_>0</Bookmarks_num_>
@@ -157,34 +164,33 @@
       </PI.26>
       <PI.3>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <L>81</L>
-       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring.c</P>
-       <VL>71</VL>
+       <C>58</C>
+       <L>11</L>
+       <P>src\brake.cpp</P>
       </PI.3>
       <PI.4>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <C>26</C>
-       <L>23</L>
-       <P>src\brakeConstants.h</P>
+       <C>20</C>
+       <L>6</L>
+       <P>src\boardConstants.h</P>
       </PI.4>
       <PI.5>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <C>20</C>
-       <L>12</L>
-       <P>src\brake.h</P>
+       <L>27</L>
+       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\hooks.c</P>
+       <VL>18</VL>
       </PI.5>
       <PI.6>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <C>13</C>
-       <L>47</L>
-       <P>src\brake.cpp</P>
+       <L>42</L>
+       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring_analog.c</P>
+       <VL>36</VL>
       </PI.6>
       <PI.7>
        <Bookmarks_num_>0</Bookmarks_num_>
-       <C>76</C>
-       <L>71</L>
-       <P>src\sketch_mar12a.cpp</P>
-       <VL>51</VL>
+       <L>81</L>
+       <P>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring.c</P>
+       <VL>71</VL>
       </PI.7>
       <PI.8>
        <Bookmarks_num_>0</Bookmarks_num_>
@@ -4068,7 +4074,7 @@
        <RelativeFileName>src\boardConstants.h</RelativeFileName>
       </Editor.0>
       <Editor.1>
-       <FileBarIndex>6</FileBarIndex>
+       <FileBarIndex>1</FileBarIndex>
        <RectPosBottom>360</RectPosBottom>
        <RectPosLeft>100</RectPosLeft>
        <RectPosRight>1326</RectPosRight>
@@ -4076,7 +4082,7 @@
        <RelativeFileName>src\brake.cpp</RelativeFileName>
       </Editor.1>
       <Editor.2>
-       <FileBarIndex>5</FileBarIndex>
+       <FileBarIndex>2</FileBarIndex>
        <RectPosBottom>260</RectPosBottom>
        <RectPosLeft>0</RectPosLeft>
        <RectPosRight>1226</RectPosRight>
@@ -4084,7 +4090,7 @@
        <RelativeFileName>src\brake.h</RelativeFileName>
       </Editor.2>
       <Editor.3>
-       <FileBarIndex>4</FileBarIndex>
+       <FileBarIndex>3</FileBarIndex>
        <RectPosBottom>285</RectPosBottom>
        <RectPosLeft>25</RectPosLeft>
        <RectPosRight>1251</RectPosRight>
@@ -4092,37 +4098,13 @@
        <RelativeFileName>src\brakeConstants.h</RelativeFileName>
       </Editor.3>
       <Editor.4>
-       <FileBarIndex>7</FileBarIndex>
+       <FileBarIndex>4</FileBarIndex>
        <RectPosBottom>249</RectPosBottom>
        <RectPosLeft>25</RectPosLeft>
        <RectPosRight>1150</RectPosRight>
        <RectPosTop>25</RectPosTop>
        <RelativeFileName>src\sketch_mar12a.cpp</RelativeFileName>
       </Editor.4>
-      <Editor.5>
-       <FileBarIndex>1</FileBarIndex>
-       <RectPosBottom>310</RectPosBottom>
-       <RectPosLeft>50</RectPosLeft>
-       <RectPosRight>838</RectPosRight>
-       <RectPosTop>50</RectPosTop>
-       <RelativeFileName>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\hooks.c</RelativeFileName>
-      </Editor.5>
-      <Editor.6>
-       <FileBarIndex>3</FileBarIndex>
-       <RectPosBottom>310</RectPosBottom>
-       <RectPosLeft>50</RectPosLeft>
-       <RectPosRight>1276</RectPosRight>
-       <RectPosTop>50</RectPosTop>
-       <RelativeFileName>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring.c</RelativeFileName>
-      </Editor.6>
-      <Editor.7>
-       <FileBarIndex>2</FileBarIndex>
-       <RectPosBottom>335</RectPosBottom>
-       <RectPosLeft>75</RectPosLeft>
-       <RectPosRight>1301</RectPosRight>
-       <RectPosTop>75</RectPosTop>
-       <RelativeFileName>..\..\..\programme\arduino-1.7.9.org-windows\arduino-1.7.9\hardware\arduino\sam\cores\arduino\wiring_analog.c</RelativeFileName>
-      </Editor.7>
       <EditorHistoryFile.0>
        <RelativeFileName>ASCIITable_profiler.trd</RelativeFileName>
       </EditorHistoryFile.0>
@@ -4137,10 +4119,10 @@
       </EditorHistoryFile.3>
      </Documents.0>
      <Progress>
-      <b>817</b>
-      <l>2426</l>
-      <r>3094</r>
-      <t>233</t>
+      <b>-31694</b>
+      <l>-32254</l>
+      <r>-31586</r>
+      <t>-32278</t>
      </Progress>
      <Watches>
       <ActiveWatchPane>2</ActiveWatchPane>
@@ -4288,12 +4270,12 @@
       </DockRect.1>
       <DockRect.2>
        <AreHorz>0</AreHorz>
-       <Percent>567</Percent>
+       <Percent>654</Percent>
        <Type>0</Type>
        <TypeOfWnd>-1</TypeOfWnd>
        <DockRect.0>
         <AreHorz>1</AreHorz>
-        <Percent>345</Percent>
+        <Percent>463</Percent>
         <strTypeOfWnd>Project Workspace</strTypeOfWnd>
         <Type>0</Type>
         <TypeOfWnd>1</TypeOfWnd>
@@ -4306,7 +4288,7 @@
        </DockRect.1>
        <DockRect.2>
         <AreHorz>1</AreHorz>
-        <Percent>393</Percent>
+        <Percent>1212</Percent>
         <Type>1</Type>
         <TypeOfWnd>-2</TypeOfWnd>
        </DockRect.2>
@@ -4325,7 +4307,7 @@
       </DockRect.3>
       <DockRect.4>
        <AreHorz>0</AreHorz>
-       <Percent>197</Percent>
+       <Percent>110</Percent>
        <Type>0</Type>
        <TypeOfWnd>-1</TypeOfWnd>
        <DockRect.0>

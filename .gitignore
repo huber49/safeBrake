@@ -1,3 +1,10 @@
 *.o
 *.a
 *.elf
+*.o
+ASCIITable/sketch_mar12a.d
+*.map
+ASCIITable/Progress.log
+*.a
+ASCIITable/ASCIITable.xqrf
+*.xjrf

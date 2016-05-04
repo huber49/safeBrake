@@ -1,4 +1,4 @@
-brake.o: src/brake.cpp src/brake.h \
+servoControl.o: src/servoControl.cpp src/servoControl.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/Arduino.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/pgmspace.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/avr/interrupt.h \
@@ -132,4 +132,4 @@ brake.o: src/brake.cpp src/brake.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBCore.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBAPI.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/RingBuffer.h \
- src/constants.h
+ src/brake.h src/constants.h
