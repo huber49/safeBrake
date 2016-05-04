@@ -2,7 +2,9 @@
 #define BoardConstants_h
 
 #include "Arduino.h"
-
+/* id of pwm-pin, to which the servo is connected to
+*/
+#define SERVO_PIN 9
 /* id of the board-integrated led.
 *  shows that we main loop is running
 */

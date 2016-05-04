@@ -6,12 +6,13 @@
 #include "Arduino.h"
 #include "brakeConstants.h"
 #include "boardConstants.h"
+#include "Servo.h"
 
 static byte brakeState = 0;
 
 /* brakeStatus - BRAKE_APPLIED 10, BRAKE_RELEASED 11
 */
-byte brakeStatus() {
+byte getBrakeStatus() {
   return brakeState;
 }
 

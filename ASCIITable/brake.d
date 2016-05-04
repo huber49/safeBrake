@@ -132,4 +132,6 @@ brake.o: src/brake.cpp src/brake.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBCore.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/USB/USBAPI.h \
  C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/cores/arduino/RingBuffer.h \
- src/brakeConstants.h src/boardConstants.h
+ src/brakeConstants.h src/boardConstants.h \
+ C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/Servo.h \
+ C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/libraries/Servo/src/sam/ServoTimers.h

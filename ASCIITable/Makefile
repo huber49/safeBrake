@@ -10,26 +10,28 @@
 #         21. Dez 2015
 
 # Define default GCC compiler settings
+#
+# NOTE: DUE build uses gcc for linking; M0 Pro uses g++ for linking
+#       No idea why the difference, just copying Arduino IDE default
+#       usage for now.
+#
 CPP := arm-none-eabi-g++.exe
 CC := arm-none-eabi-gcc.exe
 AR := arm-none-eabi-ar.exe
+ifeq ($(TARGET), ARDUINO_DUE)
+LD := arm-none-eabi-gcc.exe
+else
 LD := arm-none-eabi-g++.exe
+endif
 OBJ := arm-none-eabi-objcopy.exe
-
-# $(info $(CPP))
 
 # If provided, use compiler settings from developer
 ifdef ARDUINO_GCC_PATH
-# $(info $(ARDUINO_GCC_PATH))
-CPP := $(ARDUINO_GCC_PATH)arm-none-eabi-g++.exe
-CC := $(ARDUINO_GCC_PATH)arm-none-eabi-gcc.exe
-ifeq ($(TARGET), ARDUINO_DUE)
-LD := $(ARDUINO_GCC_PATH)arm-none-eabi-gcc.exe
-else
-LD := $(ARDUINO_GCC_PATH)arm-none-eabi-g++.exe
-endif
-AR := $(ARDUINO_GCC_PATH)arm-none-eabi-ar.exe
-OBJ:= $(ARDUINO_GCC_PATH)arm-none-eabi-objcopy.exe
+CPP := $(ARDUINO_GCC_PATH)$(CPP)
+CC := $(ARDUINO_GCC_PATH)$(CC)
+LD := $(ARDUINO_GCC_PATH)$(LD)
+AR := $(ARDUINO_GCC_PATH)$(AR)
+OBJ:= $(ARDUINO_GCC_PATH)$(OBJ)
 endif
 
 # If provided, use install path for Arduino environment;
@@ -72,31 +74,115 @@ LD_PATH := $(ARDUINO_INSTALL_PATH)hardware/arduino/samd/variants/arduino_zero/li
 
 endif
 
-#LIBRARY_OBJECTS = ./libobjs/
-LIBRARY_FILE_PATH_AUDIO = $(ARDUINO_INSTALL_PATH)libraries/Audio/src
-LIBRARY_FILE_PATH_BRIDGE = $(ARDUINO_INSTALL_PATH)libraries/Bridge/src
-LIBRARY_FILE_PATH_CIAO = $(ARDUINO_INSTALL_PATH)libraries/Ciao/src
-LIBRARY_FILE_PATH_ESPLORA = $(ARDUINO_INSTALL_PATH)libraries/Esplora/src
-LIBRARY_FILE_PATH_ETHERNET = $(ARDUINO_INSTALL_PATH)libraries/Ethernet/src
-LIBRARY_FILE_PATH_ETHERNET2 = $(ARDUINO_INSTALL_PATH)libraries/Ethernet2/src
-LIBRARY_FILE_PATH_FIRMDATA = $(ARDUINO_INSTALL_PATH)libraries/Firmdata/src
-LIBRARY_FILE_PATH_GSM = $(ARDUINO_INSTALL_PATH)libraries/GSM/src
-LIBRARY_FILE_PATH_LIQUIDCRYSTAL = $(ARDUINO_INSTALL_PATH)libraries/LiquidCrystal/src
-LIBRARY_FILE_PATH_NAXESMOTION = $(ARDUINO_INSTALL_PATH)libraries/NAxesMotion/src
-LIBRARY_FILE_PATH_ROBOT_CONTROL = $(ARDUINO_INSTALL_PATH)libraries/Robot_Control/src
-LIBRARY_FILE_PATH_ROBOT_MOTOR = $(ARDUINO_INSTALL_PATH)libraries/Robot_Motor/src
-LIBRARY_FILE_PATH_ROBOTIRREMOTE = $(ARDUINO_INSTALL_PATH)libraries/RobotIRremote/src
-LIBRARY_FILE_PATH_RTC = $(ARDUINO_INSTALL_PATH)libraries/RTC/src
-LIBRARY_FILE_PATH_SCHEDULER = $(ARDUINO_INSTALL_PATH)libraries/Scheduler/src
-LIBRARY_FILE_PATH_SD = $(ARDUINO_INSTALL_PATH)libraries/SD/src
-LIBRARY_FILE_PATH_SERVO = $(ARDUINO_INSTALL_PATH)libraries/Servo/src
-LIBRARY_FILE_PATH_SERVO1 = $(ARDUINO_INSTALL_PATH)libraries/Servo/src/samd
-LIBRARY_FILE_PATH_SPACEBREWYUN = $(ARDUINO_INSTALL_PATH)libraries/SpacebrewYun/src
-LIBRARY_FILE_PATH_STEPPER = $(ARDUINO_INSTALL_PATH)libraries/Stepper/src
-LIBRARY_FILE_PATH_TEMBOO = $(ARDUINO_INSTALL_PATH)libraries/Temboo/src
-LIBRARY_FILE_PATH_TFT = $(ARDUINO_INSTALL_PATH)libraries/TFT/src
-LIBRARY_FILE_PATH_USBHOST = $(ARDUINO_INSTALL_PATH)libraries/USBHost/src
-LIBRARY_FILE_PATH_WIFI = $(ARDUINO_INSTALL_PATH)libraries/WiFi/src
+#################################################################################################
+# Define paths to default Arduino libraries that might be used in a sketch
+#################################################################################################
+
+# AUDIO
+ifeq ($(USE_AUDIO),TRUE)
+ifeq ($(TARGET),ARDUINO_DUE)
+# NOTE: This library only works with Arduino DUE
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Audio/src
+ARDUINO_LIBRARY_OBJECTS := $(ARDUINO_LIBRARY_OBJECTS) Audio.o DAC.o
+ARDUINO_LIBRARY_FILE_PATH_AUDIO_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Audio/src
+else
+$(info Audio library only works with Arduino DUE!)
+endif
+endif
+
+# BRIDGE
+# NOTE: Not supported as it is only used with Yun, Yun Mini, Industrial 101 and Tian
+#LIBRARY_FILE_PATH_BRIDGE = $(ARDUINO_INSTALL_PATH)libraries/Bridge/src
+
+# CIAO
+# NOTE: Not supported as it is only used with Yun, Yun Mini, Industrial 101 and Tian
+#LIBRARY_FILE_PATH_CIAO = $(ARDUINO_INSTALL_PATH)libraries/Ciao/src
+
+# ESPLORA
+# NOTE: Not supported as it is only used with Esplora
+#LIBRARY_FILE_PATH_ESPLORA = $(ARDUINO_INSTALL_PATH)libraries/Esplora/src
+
+# ETHERNET
+ifeq ($(USE_ETHERNET),TRUE)
+# NOTE: This library work with all Arduino boards
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Ethernet/src
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Ethernet/src/utility
+
+ARDUINO_LIBRARY_OBJECTS := $(ARDUINO_LIBRARY_OBJECTS) Dhcp.o Dns.o Ethernet.o EthernetClient.o EthernetServer.o EthernetUdp.o socket.o w5100.o
+ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Ethernet/src
+ARDUINO_LIBRARY_FILE_PATH_ETHERNET_UTILITY_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Ethernet/src/utility
+endif
+
+# ETHERNET2
+ifeq ($(USE_ETHERNET2),TRUE)
+# NOTE: This library work with all Arduino boards and the new Ethernet Shield 2
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Ethernet2/src
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Ethernet2/src/utility
+
+ARDUINO_LIBRARY_OBJECTS := $(ARDUINO_LIBRARY_OBJECTS) Dhcp.o Dns.o Ethernet2.o EthernetClient.o EthernetServer.o EthernetUdp2.o Twitter.o socket.o w5100.o
+ARDUINO_LIBRARY_FILE_PATH_ETHERNET2_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Ethernet2/src
+ARDUINO_LIBRARY_FILE_PATH_ETHERNET2_UTILITY_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Ethernet2/src/utility
+endif
+
+# FIRMATA
+#LIBRARY_FILE_PATH_FIRMATA = $(ARDUINO_INSTALL_PATH)libraries/Firmata/src
+
+# GSM
+#LIBRARY_FILE_PATH_GSM = $(ARDUINO_INSTALL_PATH)libraries/GSM/src
+
+# GSM2
+
+# LIQUIDCRYSTAL
+#LIBRARY_FILE_PATH_LIQUIDCRYSTAL = $(ARDUINO_INSTALL_PATH)libraries/LiquidCrystal/src
+
+# NAXESMOTION
+#LIBRARY_FILE_PATH_NAXESMOTION = $(ARDUINO_INSTALL_PATH)libraries/NAxesMotion/src
+
+# ROBOT
+# NOTE: Not supported as it is only used with Arduino Robot
+#LIBRARY_FILE_PATH_ROBOT_CONTROL = $(ARDUINO_INSTALL_PATH)libraries/Robot_Control/src
+#LIBRARY_FILE_PATH_ROBOT_MOTOR = $(ARDUINO_INSTALL_PATH)libraries/Robot_Motor/src
+#LIBRARY_FILE_PATH_ROBOTIRREMOTE = $(ARDUINO_INSTALL_PATH)libraries/RobotIRremote/src
+
+# RTC - SAMD21 only
+#LIBRARY_FILE_PATH_RTC = $(ARDUINO_INSTALL_PATH)libraries/RTC/src
+
+# SCHEDULER - DUE only
+#LIBRARY_FILE_PATH_SCHEDULER = $(ARDUINO_INSTALL_PATH)libraries/Scheduler/src
+
+# SD
+#LIBRARY_FILE_PATH_SD = $(ARDUINO_INSTALL_PATH)libraries/SD/src
+
+# SERVO
+ifeq ($(USE_SERVO),TRUE)
+ARDUINO_LIBRARY_FILE_PATH_HEADERS := $(ARDUINO_LIBRARY_FILE_PATH_HEADERS) -I $(ARDUINO_INSTALL_PATH)libraries/Servo/src
+ARDUINO_LIBRARY_OBJECTS := $(ARDUINO_LIBRARY_OBJECTS) servo.o
+ifeq ($(TARGET),ARDUINO_DUE)
+ARDUINO_LIBRARY_FILE_PATH_SERVO_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Servo/src/sam
+else
+ARDUINO_LIBRARY_FILE_PATH_SERVO_SOURCE := $(ARDUINO_INSTALL_PATH)libraries/Servo/src/samd
+endif
+endif
+
+# SPACEBREWYUN
+# NOTE: Not supported as it is only used with Yun
+#LIBRARY_FILE_PATH_SPACEBREWYUN = $(ARDUINO_INSTALL_PATH)libraries/SpacebrewYun/src
+
+# STEPPER
+#LIBRARY_FILE_PATH_STEPPER = $(ARDUINO_INSTALL_PATH)libraries/Stepper/src
+
+# TEMBOO
+# NOTE: Not supported as it is only used with Yun
+#LIBRARY_FILE_PATH_TEMBOO = $(ARDUINO_INSTALL_PATH)libraries/Temboo/src
+
+# TFT
+#LIBRARY_FILE_PATH_TFT = $(ARDUINO_INSTALL_PATH)libraries/TFT/src
+
+# USBHOST - Due only
+#LIBRARY_FILE_PATH_USBHOST = $(ARDUINO_INSTALL_PATH)libraries/USBHost/src
+
+# WIFI
+#LIBRARY_FILE_PATH_WIFI = $(ARDUINO_INSTALL_PATH)libraries/WiFi/src
 
 
 # Also search for .cpp files in the src directory
@@ -132,17 +218,11 @@ ifeq ($(TARGET),ARDUINO_DUE)
 ##########
 # g++ flags
 ##########
-#changed by Markus Huber - 02-05-16 - to turn compiler-optimization off
-#Markus Huber: Version 2: turned optimazation on again - using prototypes within code to avoid "function-reduction"
 CPPFLAGS = -c -g -Os -w -ffunction-sections -fdata-sections -nostdlib -fno-threadsafe-statics --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD -mcpu=cortex-m3 -mthumb
-#CPPFLAGS = -c -g -O0 -w -ffunction-sections -fdata-sections -nostdlib -fno-threadsafe-statics --param max-inline-insns-single=500 -fno-rtti -fno-exceptions -MMD -mcpu=cortex-m3 -mthumb
 
 # gcc flags
 ##########
-#changed by Markus Huber - 02-05-16 - to turn compiler-optimization off
-#Markus Huber: Version 2: turned optimazation on again - using prototypes within code to avoid "function-reduction"
 CCFLAGS = -c -g -Os -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD -mcpu=cortex-m3 -mthumb
-#CCFLAGS = -c -g -O0 -w -ffunction-sections -fdata-sections -nostdlib --param max-inline-insns-single=500 -MMD -mcpu=cortex-m3 -mthumb
 
 # linker flags
 ##########
@@ -216,7 +296,8 @@ INCLUDE = -I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/system/libsam \
 	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/system/CMSIS/CMSIS/Include \
 	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/system/CMSIS/Device/ATMEL \
 	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/cores/arduino \
-	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/variants/arduino_due_x
+	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/sam/variants/arduino_due_x \
+	$(ARDUINO_LIBRARY_FILE_PATH_HEADERS)
 
 else
 
@@ -235,8 +316,7 @@ INCLUDE = -I $(ARDUINO_INSTALL_PATH)hardware/tools/CMSIS/CMSIS/Include \
 	-I $(ARDUINO_INSTALL_PATH)hardware/tools/CMSIS/Device/ATMEL \
 	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/samd/cores/arduino \
 	-I $(ARDUINO_INSTALL_PATH)hardware/arduino/samd/variants/arduino_zero \
-	-I $(LIBRARY_FILE_PATH_SERVO) \
-	-I $(LIBRARY_FILE_PATH_SERVO1)
+	$(ARDUINO_LIBRARY_FILE_PATH_HEADERS)
 
 endif
 
@@ -262,9 +342,17 @@ CORE_OBJECTS = variant.o dtostrf.o delay.o hooks.o itoa.o startup.o $(SYSCALLS).
 
 endif
 
+#################################################################################################
 # Arduino Library Objects
-ARDUINO_LIBRARY_OBJECTS = servo.o
+#
+# Here only required libraries will be added
+##########
+#ifdef USE_SERVO
+#ARDUINO_LIBRARY_OBJECTS := $(ARDUINO_LIBRARY_OBJECTS) servo.o
+#INCLUDE := $(INCLUDE) -I $(LIBRARY_FILE_PATH_SERVO)
+#endif
 ARDUINO_LIBRARY_ARCHIVE = libraries.a
+
 
 ifeq ($(TARGET),ARDUINO_DUE)
 #################################################################################################
@@ -314,7 +402,7 @@ sketch.elf : $(objects) core.a variant.o $(SYSCALLS).o $(ARDUINO_LIBRARY_ARCHIVE
 core.a : $(CORE_OBJECTS)
 	${AR} $(ARFLAGS) $@ $(CORE_OBJECTS)
 
-# core.a depends on object files that are core to Arduino environment
+# libraries.a depends on object files that are core to Arduino environment
 libraries.a : $(ARDUINO_LIBRARY_OBJECTS)
 	${AR} $(ARFLAGS) $@ $(ARDUINO_LIBRARY_OBJECTS)
 	
@@ -460,7 +548,52 @@ USARTClass.o : $(CORE_PATH)/USARTClass.cpp
 	
 #####################################################################################################
 # Build library files
-servo.o : $(LIBRARY_FILE_PATH_SERVO)/samd/Servo.cpp
+
+# AUDIO
+Audio.o : $(ARDUINO_LIBRARY_FILE_PATH_AUDIO_SOURCE)/Audio.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+	
+DAC.o : $(ARDUINO_LIBRARY_FILE_PATH_AUDIO_SOURCE)/DAC.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+# ETHERNET
+Dhcp.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/Dhcp.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+Dns.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/Dns.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+Ethernet.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/Ethernet.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+EthernetClient.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/EthernetClient.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+EthernetServer.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/EthernetServer.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+EthernetUdp.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/EthernetUdp.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+socket.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_UTILITY_SOURCE)/socket.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+w5100.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_UTILITY_SOURCE)/w5100.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+# ETHERNET2 - support for source not covered already by ETHERNET above
+Ethernet2.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/Ethernet2.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+EthernetUdp2.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_SOURCE)/EthernetUdp2.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+Twitter.o : $(ARDUINO_LIBRARY_FILE_PATH_ETHERNET_UTILITY_SOURCE)/Twitter.cpp
+	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
+
+
+# SERVO
+servo.o : $(ARDUINO_LIBRARY_FILE_PATH_SERVO_SOURCE)/Servo.cpp
 	${CPP} ${CPPFLAGS} ${CPPDEFINE} ${INCLUDE} $? -o $@
 
 #####################################################################################################

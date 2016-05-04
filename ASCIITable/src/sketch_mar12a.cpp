@@ -5,9 +5,15 @@
 */
 
 #include "Arduino.h"
+#include "Servo.h"
 #include "brake.h"
 #include "brakeConstants.h"
 #include "boardConstants.h"
+
+Servo brakeSimulator;
+byte brakeStatus;
+byte simulatorDirection = TURN_RIGHT;
+int brakeSimulatorPos = 0;
 
 // Read Values at ADCs and converts into Volt.
 float readVccSense(){
@@ -94,7 +100,9 @@ void reportSwitchPress(String pressedType){
 }
 
 void setup() {
-  // Initializing led-pin as an output.
+  //Attach Servo to PIN 9~
+  brakeSimulator.attach(SERVO_PIN);
+  // Initializing led-pins as an output.
   pinMode(LED, OUTPUT);
   pinMode(ERROR_LED, OUTPUT);
   pinMode(INFO_LED, OUTPUT);
@@ -109,7 +117,6 @@ void setup() {
   }
   else{
     // Initialization successful -> brake applied!
-    // Serial.println(brakeStatus());
     digitalWrite(ERROR_LED, LOW);
   }
 }
@@ -190,10 +197,39 @@ void loop() {
       Serial.println("Detected unsynchronized-behaviour of the Switch Button --> Ignored!");
     }
     // Unknown combination of voltage-intervals - or lack of voltage interval(s)
-    else{Serial.println("Unknown Error");
+    else{
+        Serial.println("Unknown Error");
         Serial.print("   ");
         Serial.print(switch1);
         Serial.print("   ");
-        Serial.println(switch2);}
+        Serial.println(switch2);
+      }
+    }
+        
+  brakeStatus = getBrakeStatus();
+  if(brakeSimulatorPos == 180){
+    simulatorDirection = TURN_LEFT;
   }
-}
+  if(brakeSimulatorPos == 0){
+    simulatorDirection = TURN_RIGHT;
+  }
+  if(brakeStatus == BRAKE_RELEASED){
+    if(simulatorDirection == TURN_RIGHT){
+      brakeSimulatorPos += 1;
+    }
+    else if(simulatorDirection == TURN_LEFT){
+      brakeSimulatorPos -= 1;
+    }
+  }
+  else if(brakeStatus == BRAKE_APPLIED){
+    brakeSimulatorPos = 0;
+  }
+  else{
+    Serial.print("Error: BrakeState-Evaluation!");
+  }
+  brakeSimulator.write(brakeSimulatorPos);
+  Serial.print("Servo-Pos: ");
+  Serial.println(brakeSimulatorPos);
+  
+  
+ }

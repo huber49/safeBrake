@@ -9,6 +9,9 @@
 #define BRAKE_APPLIED 10
 #define BRAKE_RELEASED 11
 
+#define TURN_RIGHT 20
+#define TURN_LEFT 21
+
 // 3.3 volt is the supply-voltage of the system.
 #define SUPPLY_VOLTAGE 3.3
 // VCC always should be 3.3 Volt. In case of small measurement-errors smaller values up to 3.25 Volt are also accepted. 

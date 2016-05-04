@@ -7,7 +7,7 @@
 #include "Arduino.h"
 #include "brakeConstants.h"
 
-byte brakeStatus();
+byte getBrakeStatus();
 void applyBrake();
 void releaseBrake();
 boolean brakeInit();
