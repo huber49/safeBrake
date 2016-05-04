@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="4" version="2.0">
+<workbenchAdvisor/>
+<window height="768" maximized="true" width="1024" x="401" y="-29">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar/>
+<coolbarLayout>
+<coolItem id="si.isystem.itest.main.coolbar" itemType="typeToolBarContribution" x="184" y="22"/>
+<coolItem id="si.isystem.itest.coolbar" itemType="typeToolBarContribution" x="269" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="53" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.annotationNavigation" itemType="typeToolBarContribution" x="91" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.navigation" itemType="typeToolBarContribution" x="38" y="22"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="53" y="22"/>
+</coolbarLayout>
+<page focus="true" label="&lt;Unknown Label&gt; - testIDEA">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor activePart="true" focus="true" id="si.isystem.itest.editors.TestCaseEditorPart" name="ASCIITable.iyaml" partName="ASCIITable.iyaml" title="ASCIITable.iyaml" tooltip="C:\Users\Markus_User\Desktop\ASCIITable\ASCIITable\ASCIITable.iyaml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" uri="file:/C:/Users/Markus_User/Desktop/ASCIITable/ASCIITable/ASCIITable.iyaml"/>
+</editor>
+</editors>
+<views>
+<view id="si.isystem.itest.ui.spec.errorsView" partName="Test Status">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+</views>
+<perspectives activePart="si.isystem.itest.editors.TestCaseEditorPart" activePerspective="si.isystem.itest.perspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="1" version="0.016">
+<descriptor class="si.isystem.itest.main.TestPerspective" id="si.isystem.itest.perspective" label="testIDEA"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<new_wizard_action id="si.isystem.itest.wizards.NewITestFileWizard"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="si.isystem.itest.ui.spec.errorsView"/>
+<fastViewBars/>
+<viewLayoutRec closeable="false" id="si.isystem.itest.ui.spec.errorsView" moveable="false"/>
+<viewLayoutRec closeable="false" id="org.eclipse.ui.views.ContentOutline" moveable="false"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@ba30b2">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ba30b2">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.1702462" ratioLeft="325" ratioRight="1584" relationship="2" relative="org.eclipse.ui.internal.ViewStack@ba30b2"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1d31c72" ratio="0.6464324" ratioLeft="607" ratioRight="332" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="si.isystem.itest.ui.spec.errorsView" appearance="2" expanded="2">
+<page content="si.isystem.itest.ui.spec.errorsView" label="Test Status"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="si.isystem.itest.editors.TestCaseEditorPart" uri="file:/C:/Users/Markus_User/Desktop/ASCIITable/ASCIITable/ASCIITable.iyaml"/>
+</editors>
+<item historyLabel="ASCIITable.iyaml" index="0"/>
+<item active="true" historyLabel="ASCIITable.iyaml" index="0"/>
+</navigationHistory>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="si.isystem.itest.editors.TestCaseEditorPart" name="ASCIITable.iyaml" tooltip="C:\Users\Markus_User\Desktop\ASCIITable\ASCIITable\ASCIITable.iyaml">
+<persistable uri="file:/C:/Users/Markus_User/Desktop/ASCIITable/ASCIITable/ASCIITable.iyaml"/>
+</file>
+</mruList>
+</workbench>

@@ -1,0 +1,9 @@
+INITIALIZING	Emulator: iC5000 (SN 63012)   Debugger: On-chip
+LOADING	C:\Users\Markus_User\Desktop\ASCIITable\ASCIITable\Debug\sketch.elf
+ANALYZING
+ANALYZING
+EMULATION	POD: Cortex (JTAG,SWD)   CPU: Cortex-M3
+DEBUG	PROTOCOL: SWD; RESET: SoC
+CPU	CPUID=0x412FC230 (M3 variant 2, revision 0)
+LOADING 	22008 bytes
+PROGRAMMING	Atmel ATSAM3X(A) (512kB) (86 sectors)

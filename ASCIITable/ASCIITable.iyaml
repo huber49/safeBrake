@@ -1,0 +1,914 @@
+reportConfig:
+  winIDEAVersion: 9.12.273
+testCases:
+  tests:
+  - id: test-00
+    imports:
+      id:
+        inherit: false
+      scope:
+        inherit: false
+    tags:
+    - switch_neutral
+    func:
+      func: readSwitchSense1
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal >= 1.03 && retVal <= 1.18
+    analyzer:
+      document: analyzerResult_tmp.trd
+      isSaveAfterTest: true
+      coverage:
+        isActive: true
+        exportFormat: HTML
+        exportFile: coverage_tmp.html
+        isAssemblerInfo: true
+        isExportModuleLines: true
+        isExportSources: true
+        isExportFunctionLines: true
+        isExportRanges: true
+        statistics:
+        - func: readSwitchSense1
+  - id: test-01
+    imports:
+      tags:
+        inherit: false
+    tags:
+    - switch_neutral
+    func:
+      func: readSwitchSense2
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal >= 1.03 && retVal <= 1.18
+  - id: test-02
+    func:
+      func: readGndSense
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal >= 0.00 && retVal<= 0.05
+  - id: test-03
+    func:
+      func: readVccSense
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal >= 3.25 && retVal <= 3.30
+  - id: test-04
+    func:
+      func: evaluateVccSense
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal == 1
+    tests:
+    - imports:
+        assert:
+          inherit: false
+      func:
+        params:
+        - 3.25
+      assert:
+        expressions:
+        - retVal == 1
+    - imports:
+        assert:
+          inherit: false
+      func:
+        params:
+        - 3.26
+      assert:
+        expressions:
+        - retVal == 1
+    - imports:
+        assert:
+          inherit: false
+      func:
+        params:
+        - 3.2699999999999996
+      assert:
+        expressions:
+        - retVal == 1
+    - imports:
+        assert:
+          inherit: false
+      func:
+        params:
+        - 3.2799999999999994
+      assert:
+        expressions:
+        - retVal == 1
+    - imports:
+        assert:
+          inherit: false
+      func:
+        params:
+        - 3.289999999999999
+      assert:
+        expressions:
+        - retVal == 1
+    - func:
+        params:
+        - 3.299999999999999
+  - id: test-05
+    func:
+      func: evaluateVccSense
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal == 0
+    tests:
+    - func:
+        params:
+        - -1.0
+    - func:
+        params:
+        - -0.9
+    - func:
+        params:
+        - -0.8
+    - func:
+        params:
+        - -0.7000000000000001
+    - func:
+        params:
+        - -0.6000000000000001
+    - func:
+        params:
+        - -0.5000000000000001
+    - func:
+        params:
+        - -0.40000000000000013
+    - func:
+        params:
+        - -0.30000000000000016
+    - func:
+        params:
+        - -0.20000000000000015
+    - func:
+        params:
+        - -0.10000000000000014
+    - func:
+        params:
+        - -1.3877787807814457E-16
+    - func:
+        params:
+        - 0.09999999999999987
+    - func:
+        params:
+        - 0.19999999999999987
+    - func:
+        params:
+        - 0.2999999999999999
+    - func:
+        params:
+        - 0.3999999999999999
+    - func:
+        params:
+        - 0.4999999999999999
+    - func:
+        params:
+        - 0.5999999999999999
+    - func:
+        params:
+        - 0.6999999999999998
+    - func:
+        params:
+        - 0.7999999999999998
+    - func:
+        params:
+        - 0.8999999999999998
+    - func:
+        params:
+        - 0.9999999999999998
+    - func:
+        params:
+        - 1.0999999999999999
+    - func:
+        params:
+        - 1.2
+    - func:
+        params:
+        - 1.3
+    - func:
+        params:
+        - 1.4000000000000001
+    - func:
+        params:
+        - 1.5000000000000002
+    - func:
+        params:
+        - 1.6000000000000003
+    - func:
+        params:
+        - 1.7000000000000004
+    - func:
+        params:
+        - 1.8000000000000005
+    - func:
+        params:
+        - 1.9000000000000006
+    - func:
+        params:
+        - 2.0000000000000004
+    - func:
+        params:
+        - 2.1000000000000005
+    - func:
+        params:
+        - 2.2000000000000006
+    - func:
+        params:
+        - 2.3000000000000007
+    - func:
+        params:
+        - 2.400000000000001
+    - func:
+        params:
+        - 2.500000000000001
+    - func:
+        params:
+        - 2.600000000000001
+    - func:
+        params:
+        - 2.700000000000001
+    - func:
+        params:
+        - 2.800000000000001
+    - func:
+        params:
+        - 2.9000000000000012
+    - func:
+        params:
+        - 3.0000000000000013
+    - func:
+        params:
+        - 3.1000000000000014
+    - func:
+        params:
+        - 3.2000000000000015
+    - func:
+        params:
+        - -1.0
+    - func:
+        params:
+        - -0.9
+    - func:
+        params:
+        - -0.8
+    - func:
+        params:
+        - -0.7000000000000001
+    - func:
+        params:
+        - -0.6000000000000001
+    - func:
+        params:
+        - -0.5000000000000001
+    - func:
+        params:
+        - -0.40000000000000013
+    - func:
+        params:
+        - -0.30000000000000016
+    - func:
+        params:
+        - -0.20000000000000015
+    - func:
+        params:
+        - -0.10000000000000014
+    - func:
+        params:
+        - -1.3877787807814457E-16
+    - func:
+        params:
+        - 0.09999999999999987
+    - func:
+        params:
+        - 0.19999999999999987
+    - func:
+        params:
+        - 0.2999999999999999
+    - func:
+        params:
+        - 0.3999999999999999
+    - func:
+        params:
+        - 0.4999999999999999
+    - func:
+        params:
+        - 0.5999999999999999
+    - func:
+        params:
+        - 0.6999999999999998
+    - func:
+        params:
+        - 0.7999999999999998
+    - func:
+        params:
+        - 0.8999999999999998
+    - func:
+        params:
+        - 0.9999999999999998
+    - func:
+        params:
+        - 1.0999999999999999
+    - func:
+        params:
+        - 1.2
+    - func:
+        params:
+        - 1.3
+    - func:
+        params:
+        - 1.4000000000000001
+    - func:
+        params:
+        - 1.5000000000000002
+    - func:
+        params:
+        - 1.6000000000000003
+    - func:
+        params:
+        - 1.7000000000000004
+    - func:
+        params:
+        - 1.8000000000000005
+    - func:
+        params:
+        - 1.9000000000000006
+    - func:
+        params:
+        - 2.0000000000000004
+    - func:
+        params:
+        - 2.1000000000000005
+    - func:
+        params:
+        - 2.2000000000000006
+    - func:
+        params:
+        - 2.3000000000000007
+    - func:
+        params:
+        - 2.400000000000001
+    - func:
+        params:
+        - 2.500000000000001
+    - func:
+        params:
+        - 2.600000000000001
+    - func:
+        params:
+        - 2.700000000000001
+    - func:
+        params:
+        - 2.800000000000001
+    - func:
+        params:
+        - 2.9000000000000012
+    - func:
+        params:
+        - 3.0000000000000013
+    - func:
+        params:
+        - 3.1000000000000014
+    - func:
+        params:
+        - 3.2000000000000015
+  - id: test-06
+    func:
+      func: evaluateGndSense
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal == 1
+    tests:
+    - func:
+        params:
+        - -1.0
+    - func:
+        params:
+        - -0.99
+    - func:
+        params:
+        - -0.98
+    - func:
+        params:
+        - -0.97
+    - func:
+        params:
+        - -0.96
+    - func:
+        params:
+        - -0.95
+    - func:
+        params:
+        - -0.94
+    - func:
+        params:
+        - -0.9299999999999999
+    - func:
+        params:
+        - -0.9199999999999999
+    - func:
+        params:
+        - -0.9099999999999999
+    - func:
+        params:
+        - -0.8999999999999999
+    - func:
+        params:
+        - -0.8899999999999999
+    - func:
+        params:
+        - -0.8799999999999999
+    - func:
+        params:
+        - -0.8699999999999999
+    - func:
+        params:
+        - -0.8599999999999999
+    - func:
+        params:
+        - -0.8499999999999999
+    - func:
+        params:
+        - -0.8399999999999999
+    - func:
+        params:
+        - -0.8299999999999998
+    - func:
+        params:
+        - -0.8199999999999998
+    - func:
+        params:
+        - -0.8099999999999998
+    - func:
+        params:
+        - -0.7999999999999998
+    - func:
+        params:
+        - -0.7899999999999998
+    - func:
+        params:
+        - -0.7799999999999998
+    - func:
+        params:
+        - -0.7699999999999998
+    - func:
+        params:
+        - -0.7599999999999998
+    - func:
+        params:
+        - -0.7499999999999998
+    - func:
+        params:
+        - -0.7399999999999998
+    - func:
+        params:
+        - -0.7299999999999998
+    - func:
+        params:
+        - -0.7199999999999998
+    - func:
+        params:
+        - -0.7099999999999997
+    - func:
+        params:
+        - -0.6999999999999997
+    - func:
+        params:
+        - -0.6899999999999997
+    - func:
+        params:
+        - -0.6799999999999997
+    - func:
+        params:
+        - -0.6699999999999997
+    - func:
+        params:
+        - -0.6599999999999997
+    - func:
+        params:
+        - -0.6499999999999997
+    - func:
+        params:
+        - -0.6399999999999997
+    - func:
+        params:
+        - -0.6299999999999997
+    - func:
+        params:
+        - -0.6199999999999997
+    - func:
+        params:
+        - -0.6099999999999997
+    - func:
+        params:
+        - -0.5999999999999996
+    - func:
+        params:
+        - -0.5899999999999996
+    - func:
+        params:
+        - -0.5799999999999996
+    - func:
+        params:
+        - -0.5699999999999996
+    - func:
+        params:
+        - -0.5599999999999996
+    - func:
+        params:
+        - -0.5499999999999996
+    - func:
+        params:
+        - -0.5399999999999996
+    - func:
+        params:
+        - -0.5299999999999996
+    - func:
+        params:
+        - -0.5199999999999996
+    - func:
+        params:
+        - -0.5099999999999996
+    - func:
+        params:
+        - -0.49999999999999956
+    - func:
+        params:
+        - -0.48999999999999955
+    - func:
+        params:
+        - -0.47999999999999954
+    - func:
+        params:
+        - -0.46999999999999953
+    - func:
+        params:
+        - -0.4599999999999995
+    - func:
+        params:
+        - -0.4499999999999995
+    - func:
+        params:
+        - -0.4399999999999995
+    - func:
+        params:
+        - -0.4299999999999995
+    - func:
+        params:
+        - -0.4199999999999995
+    - func:
+        params:
+        - -0.4099999999999995
+    - func:
+        params:
+        - -0.39999999999999947
+    - func:
+        params:
+        - -0.38999999999999946
+    - func:
+        params:
+        - -0.37999999999999945
+    - func:
+        params:
+        - -0.36999999999999944
+    - func:
+        params:
+        - -0.35999999999999943
+    - func:
+        params:
+        - -0.3499999999999994
+    - func:
+        params:
+        - -0.3399999999999994
+    - func:
+        params:
+        - -0.3299999999999994
+    - func:
+        params:
+        - -0.3199999999999994
+    - func:
+        params:
+        - -0.3099999999999994
+    - func:
+        params:
+        - -0.2999999999999994
+    - func:
+        params:
+        - -0.28999999999999937
+    - func:
+        params:
+        - -0.27999999999999936
+    - func:
+        params:
+        - -0.26999999999999935
+    - func:
+        params:
+        - -0.25999999999999934
+    - func:
+        params:
+        - -0.24999999999999933
+    - func:
+        params:
+        - -0.23999999999999932
+    - func:
+        params:
+        - -0.22999999999999932
+    - func:
+        params:
+        - -0.2199999999999993
+    - func:
+        params:
+        - -0.2099999999999993
+    - func:
+        params:
+        - -0.1999999999999993
+    - func:
+        params:
+        - -0.18999999999999928
+    - func:
+        params:
+        - -0.17999999999999927
+    - func:
+        params:
+        - -0.16999999999999926
+    - func:
+        params:
+        - -0.15999999999999925
+    - func:
+        params:
+        - -0.14999999999999925
+    - func:
+        params:
+        - -0.13999999999999924
+    - func:
+        params:
+        - -0.12999999999999923
+    - func:
+        params:
+        - -0.11999999999999923
+    - func:
+        params:
+        - -0.10999999999999924
+    - func:
+        params:
+        - -0.09999999999999924
+    - func:
+        params:
+        - -0.08999999999999925
+    - func:
+        params:
+        - -0.07999999999999925
+    - func:
+        params:
+        - -0.06999999999999926
+    - func:
+        params:
+        - -0.059999999999999255
+    - func:
+        params:
+        - -0.04999999999999925
+    - func:
+        params:
+        - -0.03999999999999925
+    - func:
+        params:
+        - -0.02999999999999925
+    - func:
+        params:
+        - -0.019999999999999248
+    - func:
+        params:
+        - -0.009999999999999247
+    - func:
+        params:
+        - 7.528699885739343E-16
+    - func:
+        params:
+        - 0.010000000000000753
+    - func:
+        params:
+        - 0.020000000000000753
+    - func:
+        params:
+        - 0.030000000000000755
+    - func:
+        params:
+        - 0.04000000000000076
+  - id: test-07
+    func:
+      func: evaluateGndSense
+      params:
+      - 0.00
+      retVal: retVal
+    assert:
+      expressions:
+      - retVal == 0
+    tests:
+    - func:
+        params:
+        - 0.05
+    - func:
+        params:
+        - 0.15000000000000002
+    - func:
+        params:
+        - 0.25
+    - func:
+        params:
+        - 0.35
+    - func:
+        params:
+        - 0.44999999999999996
+    - func:
+        params:
+        - 0.5499999999999999
+    - func:
+        params:
+        - 0.6499999999999999
+    - func:
+        params:
+        - 0.7499999999999999
+    - func:
+        params:
+        - 0.8499999999999999
+    - func:
+        params:
+        - 0.9499999999999998
+    - func:
+        params:
+        - 1.0499999999999998
+    - func:
+        params:
+        - 1.15
+    - func:
+        params:
+        - 1.25
+    - func:
+        params:
+        - 1.35
+    - func:
+        params:
+        - 1.4500000000000002
+    - func:
+        params:
+        - 1.5500000000000003
+    - func:
+        params:
+        - 1.6500000000000004
+    - func:
+        params:
+        - 1.7500000000000004
+    - func:
+        params:
+        - 1.8500000000000005
+    - func:
+        params:
+        - 1.9500000000000006
+    - func:
+        params:
+        - 2.0500000000000007
+    - func:
+        params:
+        - 2.150000000000001
+    - func:
+        params:
+        - 2.250000000000001
+    - func:
+        params:
+        - 2.350000000000001
+    - func:
+        params:
+        - 2.450000000000001
+    - func:
+        params:
+        - 2.550000000000001
+    - func:
+        params:
+        - 2.6500000000000012
+    - func:
+        params:
+        - 2.7500000000000013
+    - func:
+        params:
+        - 2.8500000000000014
+    - func:
+        params:
+        - 2.9500000000000015
+    - func:
+        params:
+        - 3.0500000000000016
+    - func:
+        params:
+        - 3.1500000000000017
+    - func:
+        params:
+        - 3.2500000000000018
+    - func:
+        params:
+        - 3.350000000000002
+    - func:
+        params:
+        - 3.450000000000002
+  - id: test-08
+    func:
+      func: evaluateSwitch
+    tests:
+    - id: test-08-01
+      imports:
+        id:
+          inherit: false
+      func:
+        func: evaluateSwitch
+        retVal: retVal
+      assert:
+        expressions:
+        - retVal == FAIL_GND_SHORT
+      tests:
+      - func:
+          params:
+          - 0.0
+      - func:
+          params:
+          - 0.01
+      - func:
+          params:
+          - 0.02
+    - id: test-08-02
+      imports:
+        id:
+          inherit: false
+      func:
+        func: evaluateSwitch
+        retVal: retVal
+      assert:
+        expressions:
+        - retVal == SWITCH_LOW_VAL
+      tests:
+      - func:
+          params:
+          - 0.29
+      - func:
+          params:
+          - 0.3
+      - func:
+          params:
+          - 0.31
+      - func:
+          params:
+          - 0.32
+      - func:
+          params:
+          - 0.33
+      - func:
+          params:
+          - 0.34
+      - func:
+          params:
+          - 0.35000000000000003
+      - func:
+          params:
+          - 0.36000000000000004
+      - func:
+          params:
+          - 0.37000000000000005
+      - func:
+          params:
+          - 0.38000000000000006
+      - func:
+          params:
+          - 0.39000000000000007
+      - func:
+          params:
+          - 0.4000000000000001
+      - func:
+          params:
+          - 0.4100000000000001
+    - func:
+        func: evaluateSwitch
+        retVal: retVal
+      assert:
+        expressions:
+        - retVal == FAIL_IGNORE
+      tests:
+      - func:
+          params:
+          - 0.69
+      - func:
+          params:
+          - 0.7
+      - func:
+          params:
+          - 0.71
+      - func:
+          params:
+          - 0.72
+      - func:
+          params:
+          - 0.73

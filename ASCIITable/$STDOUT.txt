@@ -1,0 +1,13 @@
+
+Building for Arduino DUE
+using the following settings
+For g++ using - C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-g++.exe
+For gcc using - C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-gcc.exe
+For ar using - C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-ar.exe
+Arduino environment installed here - C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/
+Source files are ./src/brake.cpp ./src/sketch_mar12a.cpp
+Object files are  brake.o  sketch_mar12a.o
+Output destination is ./Debug/
+
+C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-gcc.exe -Os -Wl,--gc-sections -mcpu=cortex-m3 -TC:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/variants/arduino_due_x/linker_scripts/gcc/flash.ld -Wl,-Map,sketch.map -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -Wl,--warn-unresolved-symbols -lm -gcc -Wl,--start-group syscalls_sam3.o  brake.o  sketch_mar12a.o variant.o core.a C:/Users/Markus_User/programme/arduino-1.7.9.org-windows/arduino-1.7.9/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a libraries.a -Wl,--end-group -o ./Debug/sketch.elf
+
